@@ -114,6 +114,9 @@ const TodoApp: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Todo List</h1>
+      <h2 className="text-xl font-semibold mb-4 ">
+        Target : Felling amzing with my teeth and with my self
+      </h2>
       <p className="mb-4">Tasks completed today: {completionCount}</p>
       <p>
         explain : task are here to be completed in each day and will stay for a
