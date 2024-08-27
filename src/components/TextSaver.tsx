@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { FaTrash } from "react-icons/fa";
 
 const TextSaver: React.FC = () => {
   const [text, setText] = useState<string>("");
   const [texts, setTexts] = useState<string[]>([]);
+  const [removeMode, setRemoveMode] = useState<boolean>(false);
 
   useEffect(() => {
     const savedTexts = localStorage.getItem("savedTexts");
@@ -20,8 +22,22 @@ const TextSaver: React.FC = () => {
     }
   };
 
+  const handleRemoveText = (index: number) => {
+    const updatedTexts = texts.filter((_, i) => i !== index);
+    setTexts(updatedTexts);
+    localStorage.setItem("savedTexts", JSON.stringify(updatedTexts));
+  };
+
   return (
     <div className="p-4">
+      <div className="flex  justify-end">
+        <button
+          onClick={() => setRemoveMode(!removeMode)}
+          className="mb-4 py-1 px-2 text-sm bg-red-500 text-white rounded-md"
+        >
+          {removeMode ? "Exit Remove Mode" : "Enable Remove Mode"}
+        </button>
+      </div>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -37,8 +53,14 @@ const TextSaver: React.FC = () => {
       </button>
       <ul className="mt-4 list-disc pl-5">
         {texts.map((item, index) => (
-          <li key={index} className="text-lg">
-            {item}
+          <li key={index} className="text-lg flex items-center">
+            <span className="flex-grow">{item}</span>
+            <button
+              onClick={() => handleRemoveText(index)}
+              className="ml-4 text-red-500 hover:text-red-700"
+            >
+              {removeMode && <FaTrash />}
+            </button>
           </li>
         ))}
       </ul>
