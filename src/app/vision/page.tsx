@@ -6,7 +6,7 @@ import GoTo from "@/ui/GoTo";
 import Link from "next/link";
 import React, { useState } from "react";
 
-export default function page() {
+export default function VisionPage() {
   const [view, setView] = useState<"imageUploader" | "textSaver">(
     "imageUploader"
   );
