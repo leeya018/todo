@@ -46,7 +46,7 @@ const ImageUploader: React.FC = () => {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center flex-col md:flex-row">
         <input
           type="file"
           accept="image/*"
