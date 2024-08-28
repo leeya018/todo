@@ -9,7 +9,7 @@ interface Todo {
   createdAt: Date;
 }
 
-const WEEK = 60 * 60 * 7 * 1000;
+const WEEK = 24 * 60 * 60 * 7 * 1000;
 const TodoApp: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState<string>("");
