@@ -98,15 +98,17 @@ const TodoApp: React.FC = () => {
 
   const toggleCompletion = (id: number) => {
     setTodos(
-      todos.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              completed: !todo.completed,
-              amount: todo.completed ? todo.amount - 1 : todo.amount + 1,
-            }
-          : todo
-      )
+      todos
+        .map((todo) =>
+          todo.id === id
+            ? {
+                ...todo,
+                completed: !todo.completed,
+                amount: todo.completed ? todo.amount - 1 : todo.amount + 1,
+              }
+            : todo
+        )
+        .sort((a, b) => Number(a.completed) - Number(b.completed))
     );
     setCompletionCount((count) => count + 1);
   };
