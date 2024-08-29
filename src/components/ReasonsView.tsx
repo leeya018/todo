@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReasonList from "./ReasonList";
+import axios from "axios";
 
 type ReasonsViewProps = {
-  setShowWhy: (show: boolean) => void;
+  setShowWhy: any;
 };
 
 export type Reason = {
@@ -14,7 +15,7 @@ export default function ReasonsView({ setShowWhy }: ReasonsViewProps) {
   const [reasons, setReasons] = useState<Reason[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  // Load reasons from localStorage on initial render
+  // Load reasons from localStorage on component mount
   useEffect(() => {
     const storedReasons = localStorage.getItem("reasons");
     if (storedReasons) {
@@ -22,12 +23,19 @@ export default function ReasonsView({ setShowWhy }: ReasonsViewProps) {
     }
   }, []);
 
-  // Save reasons to localStorage whenever the reasons array changes
-  useEffect(() => {
-    if (reasons.length > 0) {
-      localStorage.setItem("reasons", JSON.stringify(reasons));
-    }
-  }, [reasons]);
+  // Save reasons to localStorage and send     them to the server
+  const saveReasons = (updatedReasons: Reason[]) => {
+    localStorage.setItem("reasons", JSON.stringify(updatedReasons));
+
+    axios
+      .post("/api/save", updatedReasons)
+      .then((response) => {
+        console.log("Reasons saved successfully:", response.data);
+      })
+      .catch((err) => {
+        console.error("Failed to save reasons to server:", err);
+      });
+  };
 
   const addReason = () => {
     if (inputValue.trim() === "") return;
@@ -37,14 +45,16 @@ export default function ReasonsView({ setShowWhy }: ReasonsViewProps) {
       text: inputValue,
     };
 
-    setReasons((prevReasons) => [...prevReasons, newReason]);
+    const updatedReasons = [...reasons, newReason];
+    setReasons(updatedReasons);
+    saveReasons(updatedReasons);
     setInputValue("");
   };
 
   const deleteReason = (id: number) => {
-    setReasons((prevReasons) =>
-      prevReasons.filter((reason) => reason.id !== id)
-    );
+    const updatedReasons = reasons.filter((reason) => reason.id !== id);
+    setReasons(updatedReasons);
+    saveReasons(updatedReasons);
   };
 
   return (
