@@ -39,7 +39,7 @@ const ReasonList: React.FC<ReasonListProps> = ({
           Add
         </button>
       </div>
-      <ul>
+      <ul className="flex flex-col overflow-y-auto h-52">
         {reasons.map((reason) => (
           <li
             key={reason.id}
