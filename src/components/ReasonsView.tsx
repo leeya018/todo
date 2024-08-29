@@ -26,15 +26,6 @@ export default function ReasonsView({ setShowWhy }: ReasonsViewProps) {
   // Save reasons to localStorage and send     them to the server
   const saveReasons = (updatedReasons: Reason[]) => {
     localStorage.setItem("reasons", JSON.stringify(updatedReasons));
-
-    axios
-      .post("/api/save", updatedReasons)
-      .then((response) => {
-        console.log("Reasons saved successfully:", response.data);
-      })
-      .catch((err) => {
-        console.error("Failed to save reasons to server:", err);
-      });
   };
 
   const addReason = () => {
