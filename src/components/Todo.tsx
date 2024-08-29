@@ -1,5 +1,6 @@
 // components/Todo.tsx
 import React, { useState, useEffect } from "react";
+import ReasonsView from "./ReasonsView";
 
 interface Todo {
   id: number;
@@ -17,6 +18,7 @@ const TodoApp: React.FC = () => {
   const [editText, setEditText] = useState<string>("");
   const [completionCount, setCompletionCount] = useState<number>(0);
   const [first, setfirst] = useState(true);
+  const [showWhy, setShowWhy] = useState(false);
 
   useEffect(() => {
     const storedTodos = localStorage.getItem("todos");
@@ -119,6 +121,13 @@ const TodoApp: React.FC = () => {
       <h2 className="text-xl font-semibold mb-4 ">
         Target : Felling amzing with my teeth and with my self
       </h2>
+      <button
+        className="bg-blue-500 text-white px-4 py-1 rounded mt-4"
+        onClick={() => setShowWhy(true)}
+      >
+        why
+      </button>
+      {showWhy && <ReasonsView setShowWhy={setShowWhy} />}
       <p className="mb-4">Tasks completed today: {completionCount}</p>
       <p>
         explain : task are here to be completed in each day and will stay for a
