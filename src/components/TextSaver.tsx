@@ -54,8 +54,10 @@ const TextSaver: React.FC = () => {
       </button>
       <ul className="mt-4 list-disc pl-5">
         {texts.map((item, index) => (
-          <li key={index} className="text-lg flex items-center">
-            <span className="flex-grow">{item}</span>
+          <li key={index} className="text-lg flex items-center p-4">
+            <pre className="flex-grow whitespace-pre-wrap">
+              {item} <br />
+            </pre>
             <button
               onClick={() => handleRemoveText(index)}
               className="ml-4 text-red-500 hover:text-red-700"
